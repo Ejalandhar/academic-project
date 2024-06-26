@@ -5,17 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <style>
+        .account-popup {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .account-popup button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .account-popup button:hover {
+            background-color: #218838;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: pink;
+            background-color: #2D97B9;
             background-size: cover;
             background-attachment: fixed;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         .menu-bar {
             position: fixed;
             top: 0;
@@ -28,15 +57,22 @@
             z-index: 500;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
+
         .menu-bar a {
             color: white;
             text-decoration: none;
             margin: 0 10px;
             font-size: 14px;
         }
+
         .menu-bar a:hover {
             text-decoration: underline;
         }
+
+        .menu-bar .account {
+            position: relative;
+        }
+
         .video-background {
             position: fixed;
             right: 0;
@@ -45,16 +81,19 @@
             min-height: 100%;
             z-index: -1;
         }
+
         h1 {
             text-align: center;
             color: #333;
             margin: 80px 0 20px;
         }
+
         .container {
             width: 100%;
             padding: 20px;
             text-align: center;
         }
+
         .products {
             display: flex;
             flex-wrap: wrap;
@@ -62,6 +101,7 @@
             gap: 20px;
             padding: 0 20px;
         }
+
         .product {
             background: #333;
             padding: 15px;
@@ -72,20 +112,24 @@
             flex-direction: column;
             justify-content: space-between;
         }
+
         .product img {
             border-radius: 8px;
             max-width: 100%;
             height: auto;
         }
+
         .product h2 {
             color: #fff;
             font-size: 20px;
             margin: 10px 0;
         }
+
         .product p {
             font-size: 18px;
             color: #ccc;
         }
+
         .product button {
             padding: 10px 20px;
             font-size: 16px;
@@ -95,16 +139,18 @@
             cursor: pointer;
             border-radius: 4px;
         }
+
         .product button:hover {
             background-color: #218838;
         }
+
         .product img:hover {
             opacity: 0.8;
         }
     </style>
 </head>
 <body>
-     <div class="menu-bar">
+    <div class="menu-bar">
         <a href="#Samsung s24" class="link">Samsung S24</a>
         <a href="#iphone 13" class="link">iPhone 13</a>
         <a href="#oneplus nord ce 2" class="link">OnePlus Nord CE 2</a>
@@ -114,9 +160,15 @@
         <a href="#oppo f27pro" class="link">Oppo F27 Pro</a>
         <a href="#black berry" class="link">BlackBerry</a>
         <a href="#infinixnote 50 pro" class="link">Infinix Note 50 Pro</a>
-        <a href="cartpage.html" >cart</a>
-   </div>
-	<a href="cart" >cart</a>
+        <a href="cartpage.html">Cart</a>
+        <div class="account">
+            <a href="javascript:void(0)" onclick="toggleAccountPopup()">Account</a>
+            <div class="account-popup">
+			<h6>Hello user</h6>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <h1>Welcome to mobile mart</h1>
@@ -126,83 +178,99 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-rJNBIXKYeTVJV75NrBFg6k8sRRtRHTt78A&s" alt="Samsung S24">
                 <h2>Samsung S24</h2>
                 <p>$999.99</p>
-                <button onclick="Buy('Samsung s24')">Buy</button>
-                <button onclick="addToCart('Samsung s24')">Add to cart</button>
+                <button onclick="Buy('Samsung s24',)">Buy</button>
+                <button onclick="addToCart('Samsung s24',999.99)">Add to cart</button>
             </div>
             <div class="product" id="iphone 13">
                 <img src="https://th.bing.com/th/id/OIP.2JfREDFMX96VodMXgG5zgAHaKE?rs=1&pid=ImgDetMain" alt="iPhone 13">
                 <h2>iPhone 13</h2>
                 <p>$799.99</p>
                 <button onclick="Buy('iphone 13')">Buy</button><br>
-                <button onclick="addToCart('iphone 13')">Add to cart</button>
+                <button onclick="addToCart('iphone 13',799.99)">Add to cart</button>
             </div>
             <div class="product" id="oneplus nord ce 2">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo-k8PFoHRglFJNTxecpPc2UatNr4fRUFkKA&s" alt="OnePlus Nord CE 2">
                 <h2>OnePlus Nord CE 2</h2>
                 <p>$399.99</p>
                 <button onclick="Buy('oneplus nord ce 2')">Buy</button>
-                <button onclick="addToCart('oneplus nord ce 2')">Add to cart</button>
+                <button onclick="addToCart('oneplus nord ce 2',399.99)">Add to cart</button>
             </div>
             <div class="product" id="redmi note5pro">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM7QA_Y7VYPfSwr6NGcjwLm3nFaxKxX6DXpQ&s" alt="Redmi Note5 Pro">
                 <h2>Redmi Note5 Pro</h2>
                 <p>$299.99</p>
                 <button onclick="Buy('redmi note5pro')">Buy</button>
-                <button onclick="addToCart('redmi note5pro')">Add to cart</button>
+                <button onclick="addToCart('redmi note5pro',299.99)">Add to cart</button>
             </div>
             <div class="product" id="iphone 14 pro max">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZHgTOkTe2Gr4LCEhx6kWqvs3cBZwx4G86rQ&s" alt="iPhone 14 Pro Max">
                 <h2>iPhone 14 Pro Max</h2>
                 <p>$1099.99</p>
                 <button onclick="Buy('iphone 14 pro max')">Buy</button><br>
-                <button onclick="addToCart('iphone 14 pro max')">Add to cart</button>
+                <button onclick="addToCart('iphone 14 pro max',1099.99)">Add to cart</button>
             </div>
             <div class="product" id="motoedge 40">
                 <img src="https://th.bing.com/th/id/OIP.odMU1iJKHG44FqdWb3qvAwHaEK?w=322&h=181&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Moto Edge 40">
                 <h2>Moto Edge 40</h2>
                 <p>$499.99</p>
                 <button onclick="Buy('motoedge 40')">Buy</button>
-                <button onclick="addToCart('motoedge 40')">Add to cart</button>
+                <button onclick="addToCart('motoedge 40',499.99)">Add to cart</button>
             </div>
             <div class="product" id="oppo f27pro">
                 <img src="https://www.2yodoindia.com/wp-content/uploads/2024/06/Oppo-F27-Pro-5G-Launched-in-India.jpg" alt="Oppo F27 Pro">
                 <h2>Oppo F27 Pro</h2>
                 <p>$599.99</p>
                 <button onclick="Buy('oppo f27pro')">Buy</button>
-                <button onclick="addToCart('oppo f27pro')">Add to cart</button>
+                <button onclick="addToCart('oppo f27pro',599.99)">Add to cart</button>
             </div>
             <div class="product" id="black berry">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm91eGD-YOc_JdJ7eWyqLKAbm2xNlpaTyd0A&s" alt="BlackBerry">
                 <h2>BlackBerry</h2>
                 <p>$199.99</p>
-           
-                <button onclick="Buy('black berry')"> Buy </button>
-			    <button onclick="addToCart('black berry')"> Add to cart </button>
+                <button onclick="Buy('black berry')">Buy</button>
+                <button onclick="addToCart('black berry',199.99)">Add to cart</button>
             </div>
             <div class="product" id="infinixnote 50 pro">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8bF9tfXl1yeMb-vVU5gv6oUwM4iyK03JO4Q&s" alt="Infinix Note 50 Pro">
                 <h2>Infinix Note 50 Pro</h2>
                 <p>$299.99</p>
-                <button onclick="Buy('infinixnote 50 pro')"> Buy </button><br>
-			    <button onclick="addToCart('infinixnote 50 pro')"> Add to cart </button>
+                <button onclick="Buy('infinixnote 50 pro')">Buy</button><br>
+                <button onclick="addToCart('infinixnote 50 pro',299.99)">Add to cart</button>
             </div>
         </div>
     </div>
-	<script>
-	function addToCart(product) {
+
+    <script>
+        function toggleAccountPopup() {
+            const popup = document.querySelector('.account-popup');
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            localStorage.setItem('loggedIn', JSON.stringify(false));
+            window.location.href = 'login.html';
+        }
+
+   
+    function addToCart(itemName, itemPrice) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        cart.push({ name: itemName, price: itemPrice });
+        
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+      
+        alert(`${itemName} has been added to your cart.`);
+    }
+
+
+		function Buy(product) {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
             alert(product + ' has been added to the cart.');
         }
-		function checkLoginStatus() {
-            const loggedIn = JSON.parse(localStorage.getItem('loggedIn')) || false;
-            if (!loggedIn) {
-                window.location.href = 'login.html';
-            }
-        }
-	
-	
-	</script>
+    </script>
 </body>
 </html>
