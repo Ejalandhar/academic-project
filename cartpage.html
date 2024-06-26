@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-	<style>
+    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: pink;
+            background: #2D97B9;
             color: white;
             display: flex;
             justify-content: center;
@@ -17,13 +17,21 @@
             height: 100vh;
         }
         .cart-container {
-            background: white;
+            background: #333;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
         }
+		.payment-container{
+		    background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+			}
         h1 {
             text-align: center;
             color: #fff;
@@ -33,11 +41,11 @@
             padding: 0;
         }
         ul li {
-            background: #444;
+            background: black;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
- }
+        }
         .btn {
             background-color: #28a745;
             color: white;
@@ -61,48 +69,73 @@
             background-color: #c9302c;
         }
     </style>
-
-	</head>
+</head>
 <body>
     <div class="cart-container">
         <h1>Your Cart</h1>
         <div id="cart-items">
             <p>Your cart is empty.</p>
         </div>
-        <button class="btn" onclick="checkout()">Proceed to Checkout</button>
+        <p id="total-price"></p>
+        <button class="btn" onclick="togglePaymentForm()">Proceed to Checkout</button>
         <button class="btn clear" onclick="clearCart()">Clear All</button>
         <a href="home.html" class="btn">Back to Shopping</a>
-    </div>
-<script>let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    </div>
+    <div class="payment-container" id="payment-container" style="display: none;">
+        <h2>Payment Details</h2>
+        <form id="payment-form">
+            <input type="text" id="card-name" name="card-name" placeholder="Cardholder Name" required>
+            <input type="text" id="card-number" name="card-number" placeholder="Card Number" required>
+            <input type="text" id="expiry-date" name="expiry-date" placeholder="Expiry Date (MM/YY)" required>
+            <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+            <button type="button" class="btn" onclick="processPayment()">Submit Payment</button>
+        </form>
+    </div>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
         function updateCart() {
             const cartItems = document.getElementById('cart-items');
             cartItems.innerHTML = '';
+            let totalPrice = 0;
 
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p>Your cart is empty.</p>';
+                document.getElementById('total-price').textContent = '';
                 return;
             }
 
             const ul = document.createElement('ul');
             cart.forEach(item => {
                 const li = document.createElement('li');
-                li.textContent = item;
+                li.textContent = `${item.name} - $${item.price}`;
                 ul.appendChild(li);
+                totalPrice += item.price;
             });
             cartItems.appendChild(ul);
+            document.getElementById('total-price').textContent = `Total: $${totalPrice}`;
         }
 
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty.');
-                return;
-            }
+        function togglePaymentForm() {
+            const paymentContainer = document.getElementById('payment-container');
+            paymentContainer.style.display = paymentContainer.style.display === 'none' ? 'block' : 'none';
+        }
 
-            alert('Proceeding to checkout with the following items:\n' + cart.join(', '));
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCart();
+        function processPayment() {
+            const name = document.getElementById('card-name').value;
+            const number = document.getElementById('card-number').value;
+            const expiry = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (name && number && expiry && cvv) {
+                alert(`Payment processed for ${name}. Thank you for your purchase!`);
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCart();
+                togglePaymentForm();
+            } else {
+                alert('Please fill in all the payment details.');
+            }
         }
 
         function clearCart() {
@@ -118,6 +151,7 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', updateCart);</script>
+        document.addEventListener('DOMContentLoaded', updateCart);
+    </script>
 </body>
 </html>
