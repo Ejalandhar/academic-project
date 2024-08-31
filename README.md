@@ -3,7 +3,7 @@ ACADAMIC PROJECT:-E COMMERCE WEBSITE
 USER NAME:-ejjigiri
 PASSWORD:-nopassword
 https://ejalandhar.github.io/academic-project/
-
+https://jalandharmobiles.netlify.app/
 
 
 
